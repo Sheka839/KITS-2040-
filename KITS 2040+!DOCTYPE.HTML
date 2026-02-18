@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KITS 2040+ | Городской портал</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        glacier: {
+                            DEFAULT: '#5E8FB8',
+                            light: '#7FAFD1',
+                            dark: '#3F6F96',
+                        },
+                        turquoise: {
+                            DEFAULT: '#2FB7B0',
+                            light: '#5AD4CE',
+                            deep: '#1E8F8A',
+                        },
+                        sand: {
+                            DEFAULT: '#E7D6B5',
+                            light: '#F3E8D4',
+                            contrast: '#D4C09A',
+                        },
+                        pine: {
+                            DEFAULT: '#2E6B5B',
+                            light: '#4D8A78',
+                            dark: '#1F4D41',
+                        },
+                        gold: {
+                            DEFAULT: '#C9A24D',
+                            light: '#E0C47A',
+                            deep: '#A88432',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 1px 3px rgba(0,0,0,0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --glacier-blue-primary: #5E8FB8;
+            --lake-turquoise-primary: #2FB7B0;
+            --warm-sand-light: #F3E8D4;
+            --pine-green-primary: #2E6B5B;
+            --soft-gold-primary: #C9A24D;
+        }
+        
+        .transition-soft {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--glacier-blue-primary);
+            border-radius: 4px;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #2E6B5B 0%, #2FB7B0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .icon-material {
+            font-size: 24px;
+            stroke-width: 1.5px;
+        }
+        
+        *:focus-visible {
+            outline: 2px solid #2FB7B0;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body class="bg-sand-light text-gray-800 font-sans antialiased">
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm shadow-soft z-50 transition-soft" role="navigation" aria-label="Главная навигация">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-gradient-to-br from-glacier to-turquoise rounded-lg flex items-center justify-center shadow-soft">
+                        <span class="material-icons-outlined text-white text-xl">landscape</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-semibold text-gray-900 tracking-tight">KITS 2040+</h1>
+                        <p class="text-xs text-gray-500">Городской портал</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#services" class="text-gray-600 hover:text-turquoise transition-soft font-medium text-sm">Услуги</a>
+                    <a href="#news" class="text-gray-600 hover:text-turquoise transition-soft font-medium text-sm">Новости</a>
+                    <a href="#tourism" class="text-gray-600 hover:text-turquoise transition-soft font-medium text-sm">Туризм</a>
+                    <a href="#transparency" class="text-gray-600 hover:text-turquoise transition-soft font-medium text-sm">Прозрачность</a>
+                    <a href="#contacts" class="text-gray-600 hover:text-turquoise transition-soft font-medium text-sm">Контакты</a>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <button class="p-2 text-gray-500 hover:text-turquoise transition-soft" aria-label="Поиск">
+                        <span class="material-icons-outlined">search</span>
+                    </button>
+                    
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-turquoise transition-soft" aria-label="Выбор языка">
+                            <span class="material-icons-outlined text-lg">language</span>
+                            <span>RU</span>
+                        </button>
+                    </div>
+                    
+                    <button onclick="toggleTheme()" class="p-2 text-gray-500 hover:text-turquoise transition-soft" aria-label="Переключить тему">
+                        <span class="material-icons-outlined" id="theme-icon">dark_mode</span>
+                    </button>
+                    
+                    <button class="md:hidden p-2 text-gray-600" onclick="toggleMobileMenu()" aria-label="Меню">
+                        <span class="material-icons-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="#services" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-turquoise hover:bg-sand-light rounded-md">Услуги</a>
+                <a href="#news" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-turquoise hover:bg-sand-light rounded-md">Новости</a>
+                <a href="#tourism" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-turquoise hover:bg-sand-light rounded-md">Туризм</a>
+                <a href="#transparency" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-turquoise hover:bg-sand-light rounded-md">Прозрачность</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-12 lg:pt-32 lg:pb-20 overflow-hidden" role="banner">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80" 
+                 alt="Горный пейзаж" 
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-sand-light/90"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 leading-tight">
+                    Добро пожаловать в<br>
+                    <span class="text-gradient">Каракол!</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 mb-8 font-light">
+                    Официальный портал города. Прозрачность, доверие, устойчивое развитие.
+                </p>
+                
+                <div class="max-w-2xl mx-auto relative mb-8">
+                    <input type="text" 
+                           placeholder="Введите ваш запрос..." 
+                           class="w-full px-6 py-4 rounded-full border-2 border-gray-200 focus:border-turquoise focus:outline-none shadow-soft text-base transition-soft bg-white/90 backdrop-blur"
+                           aria-label="Поиск по порталу">
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-turquoise hover:bg-turquoise-deep text-white p-3 rounded-full transition-soft" aria-label="Искать">
+                        <span class="material-icons-outlined">search</span>
+                    </button>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button class="px-6 py-3 bg-turquoise hover:bg-turquoise-deep text-white rounded-full font-medium transition-soft shadow-soft flex items-center gap-2">
+                        <span class="material-icons-outlined text-sm">calendar_today</span>
+                        Записаться к врачу
+                    </button>
+                    <button class="px-6 py-3 bg-glacier hover:bg-glacier-dark text-white rounded-full font-medium transition-soft shadow-soft flex items-center gap-2">
+                        <span class="material-icons-outlined text-sm">receipt_long</span>
+                        Все госуслуги
+                    </button>
+                    <button class="px-6 py-3 bg-gold hover:bg-gold-deep text-white rounded-full font-medium transition-soft shadow-soft flex items-center gap-2">
+                        <span class="material-icons-outlined text-sm">report_problem</span>
+                        Сообщить о проблеме
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section id="services" class="py-12 bg-white" aria-labelledby="services-heading">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="#" class="group p-6 bg-sand-light rounded-2xl hover:bg-white hover:shadow-lg transition-soft text-center border border-transparent hover:border-sand">
+                    <div class="w-14 h-14 mx-auto mb-3 bg-white rounded-xl flex items-center justify-center shadow-soft group-hover:scale-110 transition-soft">
+                        <span class="material-icons-outlined text-3xl text-turquoise">medical_services</span>
+                    </div>
+                    <h3 class="font-medium text-gray-800 text-sm">Медицина</h3>
+                </a>
+                
+                <a href="#" class="group p-6 bg-sand-light rounded-2xl hover:bg-white hover:shadow-lg transition-soft text-center border border-transparent hover:border-sand">
+                    <div class="w-14 h-14 mx-auto mb-3 bg-white rounded-xl flex items-center justify-center shadow-soft group-hover:scale-110 transition-soft">
+                        <span class="material-icons-outlined text-3xl text-glacier">home</span>
+                    </div>
+                    <h3 class="font-medium text-gray-800 text-sm">ЖКХ</h3>
+                </a>
+                
+                <a href="#" class="group p-6 bg-sand-light rounded-2xl hover:bg-white hover:shadow-lg transition-soft text-center border border-transparent hover:border-sand">
+                    <div class="w-14 h-14 mx-auto mb-3 bg-white rounded-xl flex items-center justify-center shadow-soft group-hover:scale-110 transition-soft">
+                        <span class="material-icons-outlined text-3xl text-pine">school</span>
+                    </div>
+                    <h3 class="font-medium text-gray-800 text-sm">Образование</h3>
+                </a>
+                
+                <a href="#" class="group p-6 bg-sand-light rounded-2xl hover:bg-white hover:shadow-lg transition-soft text-center border border-transparent hover:border-sand">
+                    <div class="w-14 h-14 mx-auto mb-3 bg-white rounded-xl flex items-center justify-center shadow-soft group-hover:scale-110 transition-soft">
+                        <span class="material-icons-outlined text-3xl text-turquoise">directions_bus</span>
+                    </div>
+                    <h3 class="font-medium text-gray-800 text-sm">Транспорт</h3>
+                </a>
+                
+                <a href="#" class="group p-6 bg-sand-light rounded-2xl hover:bg-white hover:shadow-lg transition-soft text-center border border-transparent hover:border-sand">
+                    <div class="w-14 h-14 mx-auto mb-3 bg-white rounded-xl flex items-center justify-center shadow-soft group-hover:scale-110 transition-soft">
+                        <span class="material-icons-outlined text-3xl text-gold">work</span>
+                    </div>
+                    <h3 class="font-medium text-gray-800 text-sm">Работа</h3>
+                </a>
+                
+                <a href="#" class="group p-6 bg-sand-light rounded-2xl hover:bg-white hover:shadow-lg transition-soft text-center border border-transparent hover:border-sand">
+                    <div class="w-14 h-14 mx-auto mb-3 bg-white rounded-xl flex items-center justify-center shadow-soft group-hover:scale-110 transition-soft">
+                        <span class="material-icons-outlined text-3xl text-pine">description</span>
+                    </div>
+                    <h3 class="font-medium text-gray-800 text-sm">Документы</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+<!-- News Section -->
+    <section id="news" class="py-16 bg-sand-light/50" aria-labelledby="news-heading">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 id="news-heading" class="text-3xl font-semibold text-gray-900 mb-2">Новости Каракола</h2>
+                    <p class="text-gray-600">Актуальная информация о жизни города</p>
+                </div>
+                <a href="#" class="hidden md:flex items-center gap-1 text-turquoise hover:text-turquoise-deep font-medium transition-soft">
+                    Все новости
+                    <span class="material-icons-outlined text-sm">arrow_forward</span>
+                </a>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <article class="bg-white rounded-2xl overflow-hidden shadow-soft card-hover group cursor-pointer">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" 
+                             alt="Новый центр обслуживания" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-soft duration-500">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-medium text-gray-700">
+                            22 апреля 2024
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-turquoise transition-soft">
+                            В Караколе открылся новый Центр обслуживания граждан
+                        </h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                            Современный центр предоставляет более 200 услуг в режиме одного окна. Удобное расположение и новейшее оборудование.
+                        </p>
+                        <a href="#" class="inline-flex items-center text-turquoise font-medium text-sm hover:gap-2 transition-all gap-1">
+                            Подробнее
+                            <span class="material-icons-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                </article>
+                
+                <article class="bg-white rounded-2xl overflow-hidden shadow-soft card-hover group cursor-pointer">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80" 
+                             alt="Благоустройство набережной" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-soft duration-500">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-medium text-gray-700">
+                            20 апреля 2024
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-turquoise transition-soft">
+                            Благоустройство набережной: что планируется этим летом
+                        </h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                            Проект реконструкции включает новые зоны отдыха, велодорожки и освещение. Работы начнутся в мае.
+                        </p>
+                        <a href="#" class="inline-flex items-center text-turquoise font-medium text-sm hover:gap-2 transition-all gap-1">
+                            Подробнее
+                            <span class="material-icons-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                </article>
+                
+                <article class="bg-white rounded-2xl overflow-hidden shadow-soft card-hover group cursor-pointer">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800&q=80" 
+                             alt="План развития" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-soft duration-500">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-medium text-gray-700">
+                            17 апреля 2024
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-turquoise transition-soft">
+                            Утвержден план развития города на 2024 год
+                        </h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                            Стратегический документ включает проекты по цифровизации, экологии и инфраструктуре. Инвестиции составят $150M.
+                        </p>
+                        <a href="#" class="inline-flex items-center text-turquoise font-medium text-sm hover:gap-2 transition-all gap-1">
+                            Подробнее
+                            <span class="material-icons-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="mt-6 text-center md:hidden">
+                <a href="#" class="inline-flex items-center gap-1 text-turquoise font-medium">
+                    Все новости
+                    <span class="material-icons-outlined text-sm">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tourism Section -->
+    <section id="tourism" class="py-16 bg-white" aria-labelledby="tourism-heading">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="tourism-heading" class="text-3xl font-semibold text-gray-900 mb-8">Для туристов</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="relative group cursor-pointer overflow-hidden rounded-2xl aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80" 
+                         alt="Достопримечательности" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-soft duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-white font-semibold text-lg mb-1">Достопримечательности</h3>
+                        <p class="text-white/80 text-sm">Исторические места и архитектура</p>
+                    </div>
+                </div>
+                
+                <div class="relative group cursor-pointer overflow-hidden rounded-2xl aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=600&q=80" 
+                         alt="Горный туризм" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-soft duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-white font-semibold text-lg mb-1">Горный туризм</h3>
+                        <p class="text-white/80 text-sm">Тропы, базы отдыха, альпинизм</p>
+                    </div>
+                </div>
+                
+                <div class="relative group cursor-pointer overflow-hidden rounded-2xl aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80" 
+                         alt="Куда сходить" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-soft duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-white font-semibold text-lg mb-1">Куда сходить</h3>
+                        <p class="text-white/80 text-sm">Рестораны, музеи, мероприятия</p>
+                    </div>
+                </div>
+                
+                <div class="relative group cursor-pointer overflow-hidden rounded-2xl aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1530103862676-de3c9a59aa38?auto=format&fit=crop&w=600&q=80" 
+                         alt="Календарь событий" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-soft duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-white font-semibold text-lg mb-1">Календарь событий</h3>
+                        <p class="text-white/80 text-sm">Фестивали, выставки, концерты</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transparency Section -->
+    <section id="transparency" class="py-16 bg-pine text-white" aria-labelledby="transparency-heading">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 id="transparency-heading" class="text-3xl font-semibold mb-4">Прозрачность и открытые данные</h2>
+                    <p class="text-white/80 text-lg mb-8">
+                        City-OS обеспечивает полную прозрачность городского управления. Все данные доступны в реальном времени.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20">
+                            <div class="text-4xl font-bold text-gold mb-2">↑92%</div>
+                            <div class="text-sm text-white/80">Цифровая трансформация</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20">
+                            <div class="text-4xl font-bold text-turquoise-light mb-2">$150M</div>
+                            <div class="text-sm text-white/80">Инвестиции 2024</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20">
+                            <div class="text-4xl font-bold text-white mb-2">24%</div>
+                            <div class="text-sm text-white/80">Рост эффективности</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20">
+                            <div class="text-4xl font-bold text-sand mb-2">100%</div>
+                            <div class="text-sm text-white/80">Онлайн-услуг</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white/5 backdrop-blur rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-xl font-semibold mb-6">Ключевые показатели</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2 text-sm">
+                                <span>Электронные обращения</span>
+                                <span class="text-turquoise-light">12,458</span>
+                            </div>
+                            <div class="h-2 bg-white/20 rounded-full overflow-hidden">
+                                <div class="h-full bg-turquoise w-3/4 rounded-full"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2 text-sm">
+                                <span>Решено проблем</span>
+                                <span class="text-gold">98.5%</span>
+                            </div>
+                            <div class="h-2 bg-white/20 rounded-full overflow-hidden">
+                                <div class="h-full bg-gold w-[98.5%] rounded-full"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2 text-sm">
+                                <span>Удовлетворенность</span>
+                                <span class="text-sand">4.8/5</span>
+                            </div>
+                            <div class="h-2 bg-white/20 rounded-full overflow-hidden">
+                                <div class="h-full bg-sand w-[96%] rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="mt-8 w-full py-3 bg-white text-pine font-semibold rounded-xl hover:bg-sand-light transition-soft">
+                        Открыть дашборд
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Quick Links -->
+    <section class="py-12 bg-sand-light border-t border-sand" id="contacts">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="#" class="flex items-center gap-3 p-4 bg-white rounded-xl shadow-soft hover:shadow-md transition-soft group">
+                    <div class="w-12 h-12 bg-glacier/10 rounded-lg flex items-center justify-center group-hover:bg-glacier group-hover:text-white transition-soft text-glacier">
+                        <span class="material-icons-outlined">email</span>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-gray-900 text-sm">Электронная</div>
+                        <div class="text-xs text-gray-500">приемная</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="flex items-center gap-3 p-4 bg-white rounded-xl shadow-soft hover:shadow-md transition-soft group">
+                    <div class="w-12 h-12 bg-turquoise/10 rounded-lg flex items-center justify-center group-hover:bg-turquoise group-hover:text-white transition-soft text-turquoise">
+                        <span class="material-icons-outlined">map</span>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-gray-900 text-sm">Карта</div>
+                        <div class="text-xs text-gray-500">Каракола</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="flex items-center gap-3 p-4 bg-white rounded-xl shadow-soft hover:shadow-md transition-soft group">
+                    <div class="w-12 h-12 bg-pine/10 rounded-lg flex items-center justify-center group-hover:bg-pine group-hover:text-white transition-soft text-pine">
+                        <span class="material-icons-outlined">chat</span>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-gray-900 text-sm">Обратная</div>
+                        <div class="text-xs text-gray-500">связь</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="flex items-center gap-3 p-4 bg-white rounded-xl shadow-soft hover:shadow-md transition-soft group">
+                    <div class="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center group-hover:bg-gold group-hover:text-white transition-soft text-gold">
+                        <span class="material-icons-outlined">account_balance</span>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-gray-900 text-sm">Госуслуги</div>
+                        <div class="text-xs text-gray-500">онлайн</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12" role="contentinfo">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-glacier to-turquoise rounded-lg flex items-center justify-center">
+                            <span class="material-icons-outlined text-white text-sm">landscape</span>
+                        </div>
+                        <span class="font-semibold text-lg">KITS 2040+</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Официальный портал города Каракол. Прозрачное управление через City-OS.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-gray-200">Услуги</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-turquoise transition-soft">Запись к врачу</a></li>
+                        <li><a href="#" class="hover:text-turquoise transition-soft">Оплата ЖКХ</a></li>
+                        <li><a href="#" class="hover:text-turquoise transition-soft">Документы</a></li>
+                        <li><a href="#" class="hover:text-turquoise transition-soft">Транспорт</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-gray-200">Информация</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-turquoise transition-soft">О городе</a></li>
+                        <li><a href="#" class="hover:text-turquoise transition-soft">Новости</a></li>
+                        <li><a href="#" class="hover:text-turquoise transition-soft">Для туристов</a></li>
+                        <li><a href="#" class="hover:text-turquoise transition-soft">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-gray-200">Контакты</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <span class="material-icons-outlined text-sm">phone</span>
+                            +996 (3922) 5-43-21
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-icons-outlined text-sm">email</span>
+                            info@karakol.kg
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-icons-outlined text-sm">location_on</span>
+                            г. Каракол, ул. Ленина 1
+                        </li>
+                    </ul>
+                    
+                    <div class="flex gap-4 mt-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-turquoise transition-soft" aria-label="Facebook">
+                            <span class="material-icons-outlined text-sm">facebook</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-turquoise transition-soft" aria-label="Instagram">
+                            <span class="material-icons-outlined text-sm">photo_camera</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-turquoise transition-soft" aria-label="Telegram">
+                            <span class="material-icons-outlined text-sm">send</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+                <p>© 2024 Городская администрация Каракола. Все права защищены.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-soft">Политика конфиденциальности</a>
+                    <a href="#" class="hover:text-white transition-soft">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+        
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.textContent = 'dark_mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                icon.textContent = 'light_mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('theme-icon').textContent = 'light_mode';
+        }
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>
